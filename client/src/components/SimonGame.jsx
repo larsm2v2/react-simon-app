@@ -18,39 +18,39 @@ function SimonGame() {
         const color = colors[Math.floor(Math.random() * 4)];
         const newSequence = [...sequence,color]
         setSequence(newSequence);
+        console.log(newSequence)
     };
     const handleNextLevel = () => {
         if(!playing) {
-            addNewColor();
+            setPlaying(true);
         }
+            addNewColor();
     };
     // useEffect
     useEffect(()=> {
     //show sequence
-    if (sequence.length > 0) {
-        const showSequence = (idx = 0) => {
-            let ref=null;
-            
-            if(sequence[idx] === "green") ref = greenRef;
-            if(sequence[idx] === "red") ref = redRef;
-            if(sequence[idx] === "yellow") ref = yellowRef;
-            if(sequence[idx] === "blue") ref = blueRef;
+        if (sequence.length > 0) {
+            const showSequence = (idx = 0) => {
+                let ref=null;
+                
+                if(sequence[idx] === "green") ref = greenRef;
+                if(sequence[idx] === "red") ref = redRef;
+                if(sequence[idx] === "yellow") ref = yellowRef;
+                if(sequence[idx] === "blue") ref = blueRef;
 
-            //highlight ref
-            setTimeout(()=> {
-                if (ref.current != null) {
-                ref.current.classList.add("brightness-[2.5]");
-                }
-                setTimeout(() => {
-                    if (ref.current != null) {
-                    ref.current.classList.remove("brightness-[2.5]");
-                    }
+                //highlight ref
+                setTimeout(()=> {
+                    //if (ref.current != null) {}
+                    ref.current.classList.add("brightness-[2.5]");
+
+                    setTimeout(() => {
+                        ref.current.classList.remove("brightness-[2.5]");
+                        if (idx < sequence.length - 1) showSequence(idx + 1);
+                    }, 250);
                 }, 250);
-                if (idx < sequence.length - 1) showSequence(idx + 1);
-            }, 250);
-        };
-        showSequence();
-    };   
+            };
+            showSequence();
+        }  
     },[sequence]);
 
   return (

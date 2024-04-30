@@ -6,6 +6,7 @@ function SimonGame() {
     //states
     const [sequence,setSequence] = useState([]);
     const [playing, setPlaying] = useState(false);
+    const [playingIdx, setPlayingIdx] = useState(0);
 
     //useRef
     const greenRef = useRef(null);
@@ -26,6 +27,23 @@ function SimonGame() {
         }
             addNewColor();
     };
+    const handleColorClick = (e) => {
+        if (playing) {
+            const clickColor = e.target.getAttribute("color");
+            //Clicked the correct color of the sequence
+            if (sequence[playingIdx]===clickColor) {
+                //clicked last color
+                if(playingIdx === sequence.length - 1) {
+                    
+                }
+            }
+            //Clicked incorrect color of sequence
+            else {
+               //resetGame()
+               alert("You Lost!"); 
+            }
+        }
+    }
     // useEffect
     useEffect(()=> {
     //show sequence
@@ -65,12 +83,14 @@ function SimonGame() {
                     color="green"
                     border="rounded-tl-full"
                     bg="bg-green-500"
+                    onClick={handleColorClick}
                     ref={greenRef}/>
                 {/* Red button */}
                 <GameBtn
                     color="red"
                     border="rounded-tr-full" 
                     bg="bg-red-500"
+                    onClick={handleColorClick}
                     ref={redRef}/>
             </div>
             {/* Yellow and blue container */}
@@ -80,12 +100,14 @@ function SimonGame() {
                     color="yellow"
                     border="rounded-bl-full"
                     bg="bg-yellow-400"
+                    onClick={handleColorClick}
                     ref={yellowRef}/>
                 {/* Blue button */}
                 <GameBtn
                     color="blue"
                     border="rounded-br-full"
                     bg="bg-blue-500"
+                    onClick={handleColorClick}
                     ref={blueRef}/>
             </div>
                 {/* Play button */}
@@ -103,7 +125,7 @@ function SimonGame() {
                                     duration-200
                                     hover:scale-105"
                                     onClick={handleNextLevel}>
-                Play
+                {sequence.length===0 ? "Play" : sequence.length}
                 </button>
         </div>
     </div>

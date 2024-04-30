@@ -38,9 +38,13 @@ function SimonGame() {
 
             //highlight ref
             setTimeout(()=> {
+                if (ref.current != null) {
                 ref.current.classList.add("brightness-[2.5]");
+                }
                 setTimeout(() => {
+                    if (ref.current != null) {
                     ref.current.classList.remove("brightness-[2.5]");
+                    }
                 }, 250);
                 if (idx < sequence.length - 1) showSequence(idx + 1);
             }, 250);
@@ -48,7 +52,7 @@ function SimonGame() {
         showSequence();
     };   
     },[sequence]);
-    
+
   return (
     //Main Container
     <div className="flex justify-center items-center bg-neutral-800 w-screen h-screen">

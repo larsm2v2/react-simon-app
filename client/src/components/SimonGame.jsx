@@ -15,6 +15,15 @@ function SimonGame() {
     const blueRef = useRef(null);
 
     //functions
+    const sequencesimon = () => {
+        const newSequence = ['yellow', 'blue', 'red', 'red', 'yellow','red',
+                            'yellow', 'blue', 'red', 'red', 'yellow','red',
+                            'yellow', 'blue', 'red', 'red', 'yellow','red',
+                            'yellow', 'blue', 'red', 'red', 'yellow','red',
+                            ]
+        setSequence(newSequence);
+    
+    }
     const resetGame = () => {
          setSequence([]);
          setPlaying(false);
@@ -24,6 +33,7 @@ function SimonGame() {
         const color = colors[Math.floor(Math.random() * 4)];
         const newSequence = [...sequence,color]
         setSequence(newSequence);
+        console.log(color)
         console.log(newSequence)
     };
     const handleNextLevel = () => {
@@ -122,26 +132,45 @@ function SimonGame() {
                     onClick={handleColorClick}
                     ref={blueRef}/>
             </div>
+            <div>
+                {/* Play Sequence button */}
+                <button className="
+                    bg-neutral-900
+                    text-white
+                    text-xs
+                    sm: text-2xs
+                    font-bold
+                    w-[150px]
+                    rounded-full
+                    sm: w-[175px]
+                    h-[20px]
+                    sm: h-[15px]
+                    duration-200
+                    hover:scale-105"
+                    onClick={sequencesimon}>
+                    Sequence Simon
+                </button>
+            </div>
                 {/* Play button */}
                 <button className="absolute
-                                    bg-neutral-900
-                                    text-white
-                                    text-xl
-                                    sm: text-2xl
-                                    font-bold
-                                    rounded-full
-                                    w-[150px]
-                                    sm: w-[175px]
-                                    h-[150px]
-                                    sm: h-[175px]
-                                    duration-200
-                                    hover:scale-105"
-                                    onClick={handleNextLevel}>
-                {sequence.length===0 ? "Play" : `Level ${sequence.length}`}
+                    bg-neutral-900
+                    text-white
+                    text-xl
+                    sm: text-2xl
+                    font-bold
+                    rounded-full
+                    w-[150px]
+                    sm: w-[175px]
+                    h-[150px]
+                    sm: h-[175px]
+                    duration-200
+                    hover:scale-105"
+                    onClick={handleNextLevel}>
+                    {sequence.length===0 ? "Play" : `Level ${sequence.length}`}
                 </button>
         </div>
+        
     </div>
-
   )
 }
 

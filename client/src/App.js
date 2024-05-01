@@ -1,5 +1,6 @@
 import "./App.css";
 import SimonGame from "./components/SimonGame";
+
 function App() {
   return (
     <div className="App">

@@ -1,7 +1,7 @@
 import React, {useState, useRef, useEffect} from 'react'
 import GameBtn from "./GameBtn"
 
-const colors = ["green", "red", "yelow", "blue"];
+const colors = ["green", "red", "yellow", "blue"];
 function SimonGame() {
     //states
     const [sequence,setSequence] = useState([]);
@@ -15,6 +15,11 @@ function SimonGame() {
     const blueRef = useRef(null);
 
     //functions
+    const resetGame = () => {
+         setSequence([]);
+         setPlaying(false);
+         setPlayingIdx(0);
+    }
     const addNewColor = () => {
         const color = colors[Math.floor(Math.random() * 4)];
         const newSequence = [...sequence,color]
@@ -29,21 +34,30 @@ function SimonGame() {
     };
     const handleColorClick = (e) => {
         if (playing) {
-            const clickColor = e.target.getAttribute("color");
-            //Clicked the correct color of the sequence
-            if (sequence[playingIdx]===clickColor) {
-                //clicked last color
-                if(playingIdx === sequence.length - 1) {
-                    
-                }
-            }
-            //Clicked incorrect color of sequence
-            else {
-               //resetGame()
-               alert("You Lost!"); 
-            }
-        }
-    }
+            e.target.classList.add("opacity-50");
+            setTimeout(() => {
+                e.target.classList.remove("opacity-50");
+                const clickColor = e.target.getAttribute("color");
+                //Clicked the correct color of the sequence
+                if (sequence[playingIdx]===clickColor) {
+                    //clicked last color
+                    if(playingIdx === sequence.length - 1) {
+                        setTimeout( () => {
+                            setPlayingIdx(0);
+                            addNewColor();
+                        },250);
+                    } else {
+                        setPlayingIdx(playingIdx + 1);
+                    }
+                }else {
+                    //Clicked incorrect color of sequence
+                   resetGame()
+                   alert("You Lost!"); 
+                } 
+            },250)
+
+
+        }};
     // useEffect
     useEffect(()=> {
     //show sequence
@@ -58,11 +72,9 @@ function SimonGame() {
 
                 //highlight ref
                 setTimeout(()=> {
-                    //if (ref.current != null) {}
-                    ref.current.classList.add("brightness-[2.5]");
-
+                    ref.current?.classList.add("brightness-[2.5]");
                     setTimeout(() => {
-                        ref.current.classList.remove("brightness-[2.5]");
+                        ref.current?.classList.remove("brightness-[2.5]");
                         if (idx < sequence.length - 1) showSequence(idx + 1);
                     }, 250);
                 }, 250);
@@ -125,7 +137,7 @@ function SimonGame() {
                                     duration-200
                                     hover:scale-105"
                                     onClick={handleNextLevel}>
-                {sequence.length===0 ? "Play" : sequence.length}
+                {sequence.length===0 ? "Play" : `Level ${sequence.length}`}
                 </button>
         </div>
     </div>
